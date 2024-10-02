@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -52,7 +53,16 @@ const requiredFields: FieldRequirement = {
   message: true,
 }
 
+const characterLimits = {
+  name: 125,
+  email: 250,
+  reason: 50,
+  exactReason: 250,
+  message: 8388608,
+}
+
 export default function Contact() {
+  const { toast } = useToast()
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState<FormData>(initialFormData)
   const [errors, setErrors] = useState<Partial<FormData>>({})
@@ -62,25 +72,48 @@ export default function Contact() {
     setErrors(prev => ({ ...prev, [field]: '' }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (isStepValid(step)) {
-      const formData = new FormData();
-      Object.keys(initialFormData).forEach((key) => {
-        formData.append(key, formData.get(key) as string);
-      });
-  
-      const emailBody = `
-        Name: ${formData.get('name')}\n
-        Email: ${formData.get('email')}\n
-        Reason: ${formData.get('reason')}\n
-        Exact Reason: ${formData.get('exactReason')}\n
-        Message: ${formData.get('message')}\n
-      `;
-  
-      const mailtoLink = `mailto:anthony19990maalouf@gmail.com?subject=Contact%20Form%20Submission&body=${encodeURIComponent(emailBody)}`;
-      window.location.href = mailtoLink;
+      const messageContent = {
+        name: formData.name,
+        email: formData.email,
+        reason: formData.reason,
+        exactReason: formData.exactReason,
+        message: formData.message,
+      };
+
+      try {
+        const response = await fetch('/api/sendMessage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(messageContent),
+        });
+
+        if (response.ok) {
+          toast({
+            title: "Success",
+            description: "Your message has been sent successfully!",
+          });
+          setFormData(initialFormData);
+          setStep(1);
+        } else {
+          const errorData = await response.json();
+          toast({
+            title: "Error",
+            description: errorData.error || "An error occurred while sending the message.",
+          });
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        toast({
+          title: "Error",
+          description: "An error occurred while sending the message.",
+        });
+      }
     }
   };
 
@@ -95,6 +128,8 @@ export default function Contact() {
     const stepErrors: Partial<FormData> = {}
     let isValid = true
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
     currentStepFields.forEach(field => {
       if (requiredFields[field]) {
         if (Array.isArray(formData[field])) {
@@ -107,12 +142,20 @@ export default function Contact() {
           isValid = false
         }
       }
+      if (field === 'email' && !emailRegex.test(formData.email)) {
+        stepErrors.email = 'Invalid email address'
+        isValid = false
+      }
       if (field === 'reason' && formData.reason === 'other' && !formData.exactReason) {
         stepErrors.exactReason = 'This field is required'
         isValid = false
       }
       if (field === 'message' && !formData.message) {
         stepErrors.message = 'This field is required'
+        isValid = false
+      }
+      if (field in characterLimits && formData[field].length > characterLimits[field]) {
+        stepErrors[field] = `This field exceeds the ${characterLimits[field]} characters limit`
         isValid = false
       }
     })

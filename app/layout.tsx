@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react";
 
 /*const geistSans = localFont({
@@ -47,7 +48,8 @@ export default function RootLayout({
             {/* <FloatingNav /> */}
           </TooltipProvider>
         </ThemeProvider>
-        <Analytics/>
+        <Toaster />
+        <Analytics />
       </body>
     </html>
   );
