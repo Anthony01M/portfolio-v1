@@ -133,7 +133,7 @@ export default function PulsatingButton({
                   <h1 className="text-center text-xl">EXPERIENCE</h1>
                   <br />
                   <ul className="mb-4 ml-4 divide-y divide-dashed border-l text-left">
-                  <li className="relative ml-10 py-4">
+                    <li className="relative ml-10 py-4">
                       <div className="absolute -left-16 top-2 flex items-center justify-center bg-white rounded-full">
                         <Avatar className="border size-12 m-auto">
                           <AvatarImage src="/img/misck.png" alt="MISCK" className="object-contain" />
@@ -142,7 +142,7 @@ export default function PulsatingButton({
                       </div>
                       <div className="flex flex-1 flex-col justify-start gap-1">
                         <time className="text-xs text-muted-foreground">
-                          January 2024 - Present
+                          January 3rd, 2024 - Present
                         </time>
                         <h2 className="font-semibold leading-none">
                           MISCK CIPHER
@@ -161,7 +161,7 @@ export default function PulsatingButton({
                       </div>
                       <div className="flex flex-1 flex-col justify-start gap-1">
                         <time className="text-xs text-muted-foreground">
-                          x - x
+                          February 20th, 2019 - July 28th, 2020
                         </time>
                         <h2 className="font-semibold leading-none">
                           Sparked Host LLC
