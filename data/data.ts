@@ -112,10 +112,11 @@ type Work = {
         title: string;
         description: string;
         publishedAt: string;
+        active: boolean;
         image: string;
-        links: {
-            github: string;
-            website: string;
+        links?: {
+            github?: string;
+            website?: string;
         };
         tags: string;
     };

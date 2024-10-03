@@ -26,7 +26,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
             <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <div className="flex flex-wrap justify-center gap-8">
                     <p className="text-lg text-center text-muted-foreground dark:text-muted-foreground-invert">
-                    There isn&apos;t any work available in this category yet! :(
+                        There isn&apos;t any work available in this category yet! :(
                     </p>
                 </div>
             </div>
@@ -75,7 +75,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                             return (
                                 <Card
                                     key={work.slug}
-                                    className="flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full"
+                                    className="flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full min-h-[450px]"
                                 >
                                     <Image
                                         src={work.metadata?.image}
@@ -84,18 +84,27 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                                         height={300}
                                         className="h-40 w-full overflow-hidden object-cover object-top"
                                     />
-                                    <CardHeader className="px-2">
+                                    <CardHeader className="px-2 max-w-[300px]">
                                         <div className="space-y-1">
-                                            <CardTitle className="mt-1 text-base">{work.metadata?.title}</CardTitle>
+                                            <div className="flex items-center justify-between">
+                                                <CardTitle className="mt-1 text-base">
+                                                    {work.metadata?.title}
+                                                </CardTitle>
+                                                {!work.metadata?.active && (
+                                                    <Badge className="px-1 py-0 text-[10px]" variant="destructive" key={work.metadata?.title}>
+                                                        Inactive
+                                                    </Badge>
+                                                )}
+                                            </div>
                                             <Markdown className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert">
                                                 {work.metadata?.description}
                                             </Markdown>
                                         </div>
                                     </CardHeader>
-                                    <CardContent className="mt-auto flex flex-col px-2">
-                                        <div className="flex flex-wrap gap-1 justify-start items-start text-start">
+                                    <CardContent className="mt-auto flex flex-col px-2 max-w-[300px]">
+                                        <div className="flex flex-wrap gap-1 justify-start items-start text-start max-w-full">
                                             {work.metadata.tags.split(",").map((tag) => (
-                                                <Badge className="px-1 py-0 text-[10px]" variant="secondary" key={tag}>
+                                                <Badge className="px-1 py-0 text-[10px] whitespace-nowrap" variant="secondary" key={tag}>
                                                     {tag.trim()}
                                                 </Badge>
                                             ))}
@@ -124,7 +133,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                                 </Card>
                             );
                         })
-                ): null}
+                ) : null}
             </div>
 
             {works.length !== 0 ? (
