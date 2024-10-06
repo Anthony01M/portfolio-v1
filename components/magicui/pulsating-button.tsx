@@ -27,13 +27,6 @@ export default function PulsatingButton({
   duration = "1.5s",
   ...props
 }: PulsatingButtonProps) {
-  const birthDate = new Date("2002-06-05");
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
   return (
     <Modal>
       <ModalTrigger>
@@ -57,19 +50,20 @@ export default function PulsatingButton({
       <ModalBody>
         <ModalContent>
           <h1 className="text-center text-xl">ABOUT ME</h1>
-          <br />
-          <p>
-            I am a full-stack developer from Lebanon ({age} years old), a tech enthusiast, and a lifelong learner. I love building things that make life easier and more fun.
+          <p className="text-center text-sm mb-4 italic">
+            I <span className="text-red-500">💓</span> Coding
           </p>
-          <p>
-            I am passionate about creating software that is both functional and beautiful. I am always looking for new opportunities to learn and grow.
-          </p>
-          <p>
-            I am currently working on a number of projects, private and open-source projects.
-          </p>
-          <p>
-            I am always open to new opportunities and collaborations, so feel free to reach out if you have any questions or ideas.
-          </p>
+          <ul className="list-disc list-inside space-y-2">
+            <li>
+              <strong>Hobbies:</strong> When I&apos;m not coding, I enjoy <span className="underline">reading tech blogs</span>, <span className="underline">watch <Link href="https://youtube.com">YouTube</Link></span>, <span className="underline">playing video games</span>, and <span className="underline">listen to music</span>.
+            </li>
+            <li>
+              <strong>Strengths:</strong> Strong <span className="underline">problem-solving skills</span>, <span className="underline">attention to detail</span>, and a <span className="underline">collaborative mindset</span>.
+            </li>
+            <li>
+              <strong>Goals:</strong> Open to new <span className="underline">opportunities</span> and <span className="underline">collaborations</span> that challenge me and help me grow.
+            </li>
+          </ul>
         </ModalContent>
         <ModalFooter className="grid grid-cols-1">
           <div className="items-center justify-evenly text-center">
