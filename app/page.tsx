@@ -33,6 +33,13 @@ import ZapierSvg from "@/app/assets/svg/zapier.svg";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
+  const birthDate = new Date("2002-06-05");
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="flex flex-col gap-8 items-center pt-5">
@@ -48,7 +55,17 @@ export default function Home() {
             </AnimatedShinyText>
           </Link>
         </div>
-        <h1>Hi, I&apos;m Anthony M. 👋</h1>
+        <div className="gap-2">
+          <h1 className="text-2xl font-bold text-center">Anthony M.</h1>
+          <Link href="https://en.wikipedia.org/wiki/Lebanon" className="text-lg">
+            <span className="text-current">A <span className="underline">{age}</span> years old <span className="underline">Developer</span> from </span>
+            <span className="text-red-500 dark:text-red-400">Le</span>
+            <span className="text-current">b</span>
+            <span className="text-green-500 dark:text-green-400">a</span>
+            <span className="text-current">n</span>
+            <span className="text-red-500 dark:text-red-400">on</span>
+          </Link>
+        </div>
         <PulsatingButton>
           ABOUT ME
         </PulsatingButton>
@@ -59,43 +76,72 @@ export default function Home() {
           <AvatarFallback>Anthony M.</AvatarFallback>
         </Avatar>
       </div>
-      <div className="flex flex-col gap-8 items-center lg:col-span-2 pt-10">
-        <h2 className="text-xl">Languages and Tools</h2>
+      <div className="flex flex-col gap-8 items-center lg:col-span-2">
+        <h2 className="text-xl">Languages</h2>
         <div className="flex flex-wrap gap-4 justify-center">
-          {badges.map((badge) => (
-            <LinkPreview
-              url={badge.link}
-              key={badge.alt}
-            >
-              <div className="bg-alwayslight p-4 rounded-full">
-                <Image width="40" height="40" alt={badge.alt} key={badge.alt} src={badge.svg} className="min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] object-contain" />
-              </div>
-            </LinkPreview>
+          {languages.map((language) => (
+            <div key={language.alt} className="flex flex-col items-center">
+              <LinkPreview url={language.link}>
+                <div className="bg-alwayslight p-4 rounded-full">
+                  <Image
+                    width="40"
+                    height="40"
+                    alt={language.alt}
+                    src={language.svg}
+                    className="min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] object-contain"
+                  />
+                </div>
+              </LinkPreview>
+              <span className="mt-2 text-sm">{language.alt}</span>
+            </div>
+          ))}
+        </div>
+        <h2 className="text-xl">Frameworks & Platforms</h2>
+        <div className="flex flex-wrap gap-4 justify-center">
+          {frameworks.map((framework) => (
+            <div key={framework.alt} className="flex flex-col items-center">
+              <LinkPreview url={framework.link}>
+                <div className="bg-alwayslight p-4 rounded-full">
+                  <Image
+                    width="40"
+                    height="40"
+                    alt={framework.alt}
+                    src={framework.svg}
+                    className="min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] object-contain"
+                  />
+                </div>
+              </LinkPreview>
+              <span className="mt-2 text-sm">{framework.alt}</span>
+            </div>
+          ))}
+        </div>
+        <h2 className="text-xl">Tools</h2>
+        <div className="flex flex-wrap gap-4 justify-center">
+          {tools.map((tool) => (
+            <div key={tool.alt} className="flex flex-col items-center">
+              <LinkPreview url={tool.link}>
+                <div className="bg-alwayslight p-4 rounded-full">
+                  <Image
+                    width="40"
+                    height="40"
+                    alt={tool.alt}
+                    src={tool.svg}
+                    className="min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] object-contain"
+                  />
+                </div>
+              </LinkPreview>
+              <span className="mt-2 text-sm">{tool.alt}</span>
+            </div>
           ))}
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 
-const badges = [
-  {
-    svg: AppwriteSvg, alt: "Appwrite", link: "https://appwrite.io/"
-  },
+const languages = [
   {
     svg: Css3Svg, alt: "Css3", link: "https://developer.mozilla.org/en-US/docs/Web/CSS"
-  },
-  {
-    svg: ExpressJsSvg, alt: "ExpressJs", link: "https://expressjs.com/"
-  },
-  {
-    svg: FigmaSvg, alt: "Figma", link: "https://www.figma.com/"
-  },
-  {
-    svg: FirebaseSvg, alt: "Firebase", link: "https://firebase.google.com/"
-  },
-  {
-    svg: FlaskSvg, alt: "Flask", link: "https://flask.palletsprojects.com/"
   },
   {
     svg: Html5Svg, alt: "Html5", link: "https://developer.mozilla.org/en-US/docs/Web/HTML"
@@ -107,7 +153,19 @@ const badges = [
     svg: JavaScriptSvg, alt: "JavaScript", link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
   },
   {
-    svg: MySQLSvg, alt: "MySQL", link: "https://www.mysql.com/"
+    svg: PythonSvg, alt: "Python", link: "https://www.python.org/"
+  },
+  {
+    svg: TypeScriptSvg, alt: "TypeScript", link: "https://www.typescriptlang.org/"
+  }
+];
+
+const frameworks = [
+  {
+    svg: ExpressJsSvg, alt: "ExpressJs", link: "https://expressjs.com/"
+  },
+  {
+    svg: FlaskSvg, alt: "Flask", link: "https://flask.palletsprojects.com/"
   },
   {
     svg: NextJSSvg, alt: "NextJS", link: "https://nextjs.org/"
@@ -116,13 +174,25 @@ const badges = [
     svg: NodeJSSvg, alt: "NodeJS", link: "https://nodejs.org/"
   },
   {
-    svg: PostmanSvg, alt: "Postman", link: "https://www.postman.com/"
-  },
-  {
-    svg: PythonSvg, alt: "Python", link: "https://www.python.org/"
-  },
-  {
     svg: ReactJSSvg, alt: "ReactJS", link: "https://reactjs.org/"
+  }
+];
+
+const tools = [
+  {
+    svg: AppwriteSvg, alt: "Appwrite", link: "https://appwrite.io/"
+  },
+  {
+    svg: FigmaSvg, alt: "Figma", link: "https://www.figma.com/"
+  },
+  {
+    svg: FirebaseSvg, alt: "Firebase", link: "https://firebase.google.com/"
+  },
+  {
+    svg: MySQLSvg, alt: "MySQL", link: "https://www.mysql.com/"
+  },
+  {
+    svg: PostmanSvg, alt: "Postman", link: "https://www.postman.com/"
   },
   {
     svg: RedisSvg, alt: "Redis", link: "https://redis.io/"
@@ -132,9 +202,6 @@ const badges = [
   },
   {
     svg: TailwindCSSSvg, alt: "TailwindCSS", link: "https://tailwindcss.com/"
-  },
-  {
-    svg: TypeScriptSvg, alt: "TypeScript", link: "https://www.typescriptlang.org/"
   },
   {
     svg: ZapierSvg, alt: "Zapier", link: "https://zapier.com"
