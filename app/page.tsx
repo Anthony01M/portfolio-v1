@@ -141,7 +141,7 @@ export default function Home() {
 
 const languages = [
   {
-    svg: Css3Svg, alt: "Css3", link: "https://developer.mozilla.org/en-US/docs/Web/CSS"
+    svg: Css3Svg, alt: "CSS3", link: "https://developer.mozilla.org/en-US/docs/Web/CSS"
   },
   {
     svg: Html5Svg, alt: "Html5", link: "https://developer.mozilla.org/en-US/docs/Web/HTML"
