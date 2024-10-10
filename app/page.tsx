@@ -58,7 +58,7 @@ export default function Home() {
         <div className="gap-2">
           <h1 className="text-2xl font-bold text-center">Anthony M.</h1>
           <Link href="https://en.wikipedia.org/wiki/Lebanon" className="text-lg">
-            <span className="text-current">A <span className="underline">{age}</span> years old <span className="underline">Developer</span> from </span>
+            <span className="text-current">A {age} years old <span className="underline">Developer</span> from </span>
             <span className="text-red-500 dark:text-red-400">Le</span>
             <span className="text-current">b</span>
             <span className="text-green-500 dark:text-green-400">a</span>
