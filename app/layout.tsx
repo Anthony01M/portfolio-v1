@@ -29,6 +29,35 @@ const helvetica = localFont({
 export const metadata: Metadata = {
   title: "Anthony M.",
   description: "Anthony M.'s portfolio - If you're looking for someone to hire, contact me to get a quote. | Fullstack Developer | I love doing backend stuff the most. | I mostly do the stuff that I like or that I'm interested in.",
+  robots: "index, follow",
+  openGraph: {
+    type: "profile",
+    firstName: "Anthony",
+    lastName: "M.",
+    gender: "Male",
+    title: "Anthony M.",
+    description: "Anthony M.'s portfolio - If you're looking for someone to hire, contact me to get a quote. | Fullstack Developer | I love doing backend stuff the most. | I mostly do the stuff that I like or that I'm interested in.",
+    siteName: "Anthony M.",
+  },
+  twitter: {
+    title: "Anthony M.",
+    description: "Anthony M.'s portfolio - If you're looking for someone to hire, contact me to get a quote. | Fullstack Developer | I love doing backend stuff the most. | I mostly do the stuff that I like or that I'm interested in.",
+  },
+  keywords: [
+    "Anthony M.",
+    "developer",
+    "React",
+    "Node.js",
+    "JavaScript",
+    "TypeScript",
+    "Python",
+    "Next.js",
+    "Tailwind CSS",
+    "Express.js",
+    "REST APIs",
+    "web development",
+    "software engineer"
+  ]
 };
 
 export default function RootLayout({
