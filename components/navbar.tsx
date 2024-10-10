@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { HouseIcon, MailIcon } from "lucide-react";
 import DiscordIcon from "@/app/assets/svg/discord.svg";
+import GithubIcon from "@/app/assets/svg/github.svg";
 
 export default function Navbar() {
   return (
@@ -90,6 +91,24 @@ export default function Navbar() {
             </TooltipTrigger>
             <TooltipContent>
               <p>Discord</p>
+            </TooltipContent>
+          </Tooltip>
+        </DockIcon>
+        <DockIcon>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="https://github.com/Anthony01M"
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "size-12"
+                )}
+              >
+                <Image alt="github" key="github" src={GithubIcon} className="size-5 dark:invert" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Github</p>
             </TooltipContent>
           </Tooltip>
         </DockIcon>
