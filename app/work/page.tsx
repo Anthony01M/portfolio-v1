@@ -14,7 +14,7 @@ import { getWorkCategories } from "@/data/data"
 export default async function WorkCategory() {
     const categories = await getWorkCategories();
     return (
-        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-15 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-15 gap-16 font-[family-name:var(--font-geist-sans)]">
             <div className="flex flex-col items-center justify-center mb-8">
                 <h1 className="text-4xl font-bold text-center mb-2">My Work</h1>
                 <p className="text-center text-muted-foreground dark:text-muted-invert">
