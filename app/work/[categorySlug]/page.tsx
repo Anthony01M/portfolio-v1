@@ -7,22 +7,25 @@ import Markdown from "react-markdown";
 import { Badge } from "@/components/ui/badge";
 import { notFound } from "next/navigation";
 
-import JavaScriptSvg from "@/app/assets/svg/javascript.svg";
-import TypeScriptSvg from "@/app/assets/svg/typescript.svg";
-import PythonSvg from "@/app/assets/svg/python.svg";
-import JavaSvg from "@/app/assets/svg/java.svg";
-import NodeJSSvg from "@/app/assets/svg/nodejs.svg";
+import AppwriteSvg from '@/app/assets/svg/appwrite.svg';
+import Css3Svg from '@/app/assets/svg/css3.svg';
 import ExpressJsSvg from "@/app/assets/svg/expressjs.svg";
-import ReactJSSvg from "@/app/assets/svg/reactjs.svg";
-import NextJSSvg from "@/app/assets/svg/nextjs.svg";
-import TailwindCSSSvg from "@/app/assets/svg/tailwindcss.svg";
-import AppwriteSvg from "@/app/assets/svg/appwrite.svg";
-import FirebaseSvg from "@/app/assets/svg/firebase.svg";
-import MySQLSvg from "@/app/assets/svg/mysql.svg";
-import SQLiteSvg from "@/app/assets/svg/sqlite.svg";
-import RedisSvg from "@/app/assets/svg/redis.svg";
-import PostmanSvg from "@/app/assets/svg/postman.svg";
 import FigmaSvg from "@/app/assets/svg/figma.svg";
+import FirebaseSvg from "@/app/assets/svg/firebase.svg";
+import FlaskSvg from "@/app/assets/svg/flask.svg";
+import Html5Svg from "@/app/assets/svg/html5.svg";
+import JavaSvg from "@/app/assets/svg/java.svg";
+import JavaScriptSvg from "@/app/assets/svg/javascript.svg";
+import MySQLSvg from "@/app/assets/svg/mysql.svg";
+import NextJSSvg from "@/app/assets/svg/nextjs.svg";
+import NodeJSSvg from "@/app/assets/svg/nodejs.svg";
+import PostmanSvg from "@/app/assets/svg/postman.svg";
+import PythonSvg from "@/app/assets/svg/python.svg";
+import ReactJSSvg from "@/app/assets/svg/reactjs.svg";
+import RedisSvg from "@/app/assets/svg/redis.svg";
+import SQLiteSvg from "@/app/assets/svg/sqlite.svg";
+import TailwindCSSSvg from "@/app/assets/svg/tailwindcss.svg";
+import TypeScriptSvg from "@/app/assets/svg/typescript.svg";
 import ZapierSvg from "@/app/assets/svg/zapier.svg";
 
 interface WorkCategoryProps {
@@ -35,11 +38,14 @@ const languagesAndTools = [
     { name: "TypeScript", svg: TypeScriptSvg, type: "language" },
     { name: "Python", svg: PythonSvg, type: "language" },
     { name: "Java", svg: JavaSvg, type: "language" },
-    { name: "Node.js", svg: NodeJSSvg, type: "tool" },
+    { name: "HTML", svg: Html5Svg, type: "language" },
+    { name: "CSS", svg: Css3Svg, type: "language" },
+    { name: "Node.js", svg: NodeJSSvg, type: "language" },
     { name: "Express.js", svg: ExpressJsSvg, type: "tool" },
     { name: "React", svg: ReactJSSvg, type: "tool" },
     { name: "Next.js", svg: NextJSSvg, type: "tool" },
-    { name: "Tailwind CSS", svg: TailwindCSSSvg, type: "tool" },
+    { name: "TailwindCSS", svg: TailwindCSSSvg, type: "tool" },
+    { name: "Flask", svg: FlaskSvg, type: "tool" },
     { name: "Appwrite", svg: AppwriteSvg, type: "tool" },
     { name: "Firebase", svg: FirebaseSvg, type: "tool" },
     { name: "MySQL", svg: MySQLSvg, type: "tool" },
