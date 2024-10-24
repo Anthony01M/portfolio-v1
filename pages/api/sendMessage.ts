@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createReadStream, writeFileSync, statSync, unlinkSync } from 'fs';
-import { join } from 'path';
 import FormData from 'form-data';
 import axios from 'axios';
 
@@ -61,16 +59,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       const uniqueId = generateUniqueId();
-      const filePath = join(process.cwd(), `message-${uniqueId}.txt`);
-      writeFileSync(filePath, message);
-
-      const fileSize = statSync(filePath).size;
-      if (fileSize > 8 * 1024 * 1024) {
-        throw new Error('File size exceeds 8MB limit.');
-      }
+      const fileName = `message-${uniqueId}.txt`;
+      const fileContent = message;
 
       const formData = new FormData();
-      formData.append('file', createReadStream(filePath), `message.txt`);
+      formData.append('file', Buffer.from(fileContent, 'utf-8'), fileName);
       formData.append('payload_json', JSON.stringify({
         content: `**Name**: ${name}\n**Email**: ${email}\n**Reason**: ${reason}\n${exactReason ? `**Exact Reason**: ${exactReason}\n` : ''}`,
       }));
@@ -84,8 +77,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (response.status !== 200) {
         throw new Error(`Failed to send message: ${response.statusText} - ${response.data}`);
       }
-
-      unlinkSync(filePath);
 
       res.status(200).json({ success: true });
     } catch (error: any) {
