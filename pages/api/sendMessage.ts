@@ -53,7 +53,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ success: false, error: 'Exact Reason exceeds 250 characters limit.' });
     }
 
-    const webhookUrl = "https://canary.discord.com/api/webhooks/1291044991522836632/WdFjBXZ1mAD_P5RpGckwov7B6p2SmqYzdqWfSNkSX4qGaacFAxNeri6R19q6xqD9KATh";
+    const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+
+    if (!webhookUrl) {
+      return res.status(500).json({ success: false, error: 'Webhook URL is not configured.' });
+    }
 
     try {
       const uniqueId = generateUniqueId();
