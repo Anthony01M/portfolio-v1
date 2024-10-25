@@ -6,6 +6,7 @@ import Image from "next/image";
 import Markdown from "react-markdown";
 import { Badge } from "@/components/ui/badge";
 import { notFound } from "next/navigation";
+import { LinkPreview } from "@/components/aceternity/link-preview";
 
 import AppwriteSvg from '@/app/assets/svg/appwrite.svg';
 import Css3Svg from '@/app/assets/svg/css3.svg';
@@ -198,11 +199,11 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                                         )}
                                         {work.metadata?.links?.website && (
                                             <div className="flex justify-center items-center text-center gap-1 w-full">
-                                                <Link href={work.metadata.links.website}>
-                                                    <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">
+                                                <LinkPreview url={work.metadata.links.website}>
+                                                    <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm">
                                                         Website
                                                     </span>
-                                                </Link>
+                                                </LinkPreview>
                                             </div>
                                         )}
                                     </CardFooter>
