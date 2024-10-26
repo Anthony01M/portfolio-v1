@@ -48,9 +48,9 @@ export default function Home() {
             "group rounded-full border border-black/5 bg-reverse text-base text-white dark:text-black transition-all ease-in hover:cursor-pointer dark:border-white/5",
           )}
         >
-          <Link href="/work">
+          <Link href="/project">
             <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:duration-300">
-              <span>✨ Checkout My Work</span>
+              <span>✨ Checkout My Projects</span>
               <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
             </AnimatedShinyText>
           </Link>

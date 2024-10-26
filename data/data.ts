@@ -14,7 +14,7 @@ const categories = [
         title: "Web Development",
         description: "I build websites and web applications using modern tools and technologies.",
         image: {
-            src: "/img/work/web-development.png",
+            src: "/img/project/web-development.png",
             alt: "Web Development",
         },
     },
@@ -23,7 +23,7 @@ const categories = [
         title: "Minecraft Plugins",
         description: "I develop custom plugins for Minecraft servers using basic and advanced frameworks.",
         image: {
-            src: "/img/work/minecraft-plugins.png",
+            src: "/img/project/minecraft-plugins.png",
             alt: "Minecraft Plugins",
         },
     },
@@ -32,7 +32,7 @@ const categories = [
         title: "Discord Bots",
         description: "I develop custom bots for Discord servers using Discord.js, Discord.py, JDA and other libraries.",
         image: {
-            src: "/img/work/discord-bots.png",
+            src: "/img/project/discord-bots.png",
             alt: "Discord Bots",
         },
     }
@@ -48,7 +48,7 @@ type Category = {
     slug: string,
 };
 
-export async function getWorkCategories(): Promise<Category[]> {
+export async function getProjectCategories(): Promise<Category[]> {
     return categories;
 }
 
@@ -74,7 +74,7 @@ export async function markdownToHTML(markdown: string) {
     return p.toString();
 }
 
-export async function getPost(type: "work" | "blog", slug: string) {
+export async function getPost(type: "project" | "blog", slug: string) {
     const filePath = path.join("content", type, `${slug}.mdx`);
     if (!fs.existsSync(filePath)) return null; // or throw an error, depending on your requirements
     const source = fs.readFileSync(filePath, "utf-8");
@@ -87,14 +87,14 @@ export async function getPost(type: "work" | "blog", slug: string) {
     };
 }
 
-async function getAllWork(dir: string) {
+async function getAllProject(dir: string) {
     const mdxFiles = getMDXFiles(dir);
     return Promise.all(
         mdxFiles.map(async (file) => {
             const slug = path.basename(file, path.extname(file));
             const categorySlug = path.basename(dir);
             const fullSlug = `${categorySlug}/${slug}`;
-            const post = await getPost("work", fullSlug);
+            const post = await getPost("project", fullSlug);
             if (post == null) return;
             const { metadata, source } = post;
             return {
@@ -106,7 +106,7 @@ async function getAllWork(dir: string) {
     );
 }
 
-type Work = {
+type Project = {
     slug: string;
     metadata: {
         title: string;
@@ -123,25 +123,25 @@ type Work = {
     source: string;
 };
 
-export async function getWorkOfCategory(category: string, page: number = 1) {
+export async function getProjectOfCategory(category: string, page: number = 1) {
     if (typeof category !== "string") return null;
-    const categories = await getWorkCategories();
+    const categories = await getProjectCategories();
     const categoryExists = categories.some((cat) => cat.slug === category);
     if (!categoryExists) return null;
-    const works = await getAllWork(path.join(process.cwd(), "content/work/" + category));
+    const projects = await getAllProject(path.join(process.cwd(), "content/project/" + category));
     const pageSize = 3;
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    return works.slice(startIndex, endIndex) as Work[];
+    return projects.slice(startIndex, endIndex) as Project[];
 }
 
-export async function getWorkOfCategoryPageAmount(category: string) {
+export async function getProjectOfCategoryPageAmount(category: string) {
     if (typeof category !== "string") return null;
-    const categories = await getWorkCategories();
+    const categories = await getProjectCategories();
     const categoryExists = categories.some((cat) => cat.slug === category);
     if (!categoryExists) return null;
-    const works = await getAllWork(path.join(process.cwd(), "content/work/" + category));
-    return works.length;
+    const projects = await getAllProject(path.join(process.cwd(), "content/project/" + category));
+    return projects.length;
 }
 
 export async function getBlogPost(slug: string) {

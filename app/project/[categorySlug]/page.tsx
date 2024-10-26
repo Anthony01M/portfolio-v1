@@ -1,4 +1,4 @@
-import { getWorkOfCategory, getWorkOfCategoryPageAmount, getWorkCategories } from "@/data/data";
+import { getProjectOfCategory, getProjectOfCategoryPageAmount, getProjectCategories } from "@/data/data";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Card, CardFooter, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -29,7 +29,7 @@ import TailwindCSSSvg from "@/app/assets/svg/tailwindcss.svg";
 import TypeScriptSvg from "@/app/assets/svg/typescript.svg";
 import ZapierSvg from "@/app/assets/svg/zapier.svg";
 
-interface WorkCategoryProps {
+interface ProjectCategoryProps {
     params: { categorySlug: string };
     searchParams: { page?: string };
 }
@@ -57,19 +57,19 @@ const languagesAndTools = [
     { name: "Zapier", svg: ZapierSvg, type: "tool" },
 ];
 
-export default async function WorkCategory({ params, searchParams }: WorkCategoryProps) {
+export default async function ProjectCategory({ params, searchParams }: ProjectCategoryProps) {
     const { categorySlug } = params;
     const page = parseInt(searchParams.page || "1", 10);
-    const works = await getWorkOfCategory(categorySlug, page);
-    const categories = await getWorkCategories();
+    const projects = await getProjectOfCategory(categorySlug, page);
+    const categories = await getProjectCategories();
     const categoryExists = categories.some((cat) => cat.slug === categorySlug);
-    const pageCount = await getWorkOfCategoryPageAmount(categorySlug);
-    if (works?.length === 0 && categoryExists && !pageCount) {
+    const pageCount = await getProjectOfCategoryPageAmount(categorySlug);
+    if (projects?.length === 0 && categoryExists && !pageCount) {
         return (
             <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <div className="flex flex-wrap justify-center gap-8">
                     <p className="text-lg text-center text-muted-foreground dark:text-muted-foreground-invert">
-                        There isn&apos;t any work available in this category yet! :(
+                        There isn&apos;t any project available in this category yet! :(
                     </p>
                 </div>
             </div>
@@ -88,7 +88,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
             </div>
         );
     }
-    if (!works || !categoryExists) return notFound();
+    if (!projects || !categoryExists) return notFound();
 
     const formattedCategoryName = categorySlug.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 
@@ -97,28 +97,28 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
             <h1 className="text-3xl font-bold">{formattedCategoryName}</h1>
 
             <div className="flex flex-wrap justify-center gap-8">
-                {works.length !== 0 ? (
-                    works
+                {projects.length !== 0 ? (
+                    projects
                         .sort((a, b) => {
                             if (a?.metadata?.publishedAt && b?.metadata?.publishedAt) {
                                 return new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt) ? -1 : 1;
                             }
                             return 0;
                         })
-                        .map((work) => {
-                            if (!work) return null; // This should NEVER happen.
-                            const tags = work.metadata.tags.split(",").map(tag => tag.trim().toLowerCase());
+                        .map((project) => {
+                            if (!project) return null; // This should NEVER happen.
+                            const tags = project.metadata.tags.split(",").map(tag => tag.trim().toLowerCase());
                             const languages = languagesAndTools.filter(tool => tool.type === "language" && tags.includes(tool.name.toLowerCase()));
                             const tools = languagesAndTools.filter(tool => tool.type === "tool" && tags.includes(tool.name.toLowerCase()));
                             const otherTags = tags.filter(tag => !languagesAndTools.some(tool => tool.name.toLowerCase() === tag));
                             return (
                                 <Card
-                                    key={work.slug}
+                                    key={project.slug}
                                     className="flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full min-h-[450px]"
                                 >
                                     <Image
-                                        src={work.metadata?.image}
-                                        alt={work.metadata?.title}
+                                        src={project.metadata?.image}
+                                        alt={project.metadata?.title}
                                         width={500}
                                         height={300}
                                         className="h-40 w-full overflow-hidden object-cover object-top"
@@ -127,16 +127,16 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                                         <div className="space-y-1">
                                             <div className="flex items-center justify-between">
                                                 <CardTitle className="mt-1 text-base">
-                                                    {work.metadata?.title}
+                                                    {project.metadata?.title}
                                                 </CardTitle>
-                                                {!work.metadata?.active && (
-                                                    <Badge className="px-1 py-0 text-[10px]" variant="destructive" key={work.metadata?.title}>
+                                                {!project.metadata?.active && (
+                                                    <Badge className="px-1 py-0 text-[10px]" variant="destructive" key={project.metadata?.title}>
                                                         Inactive
                                                     </Badge>
                                                 )}
                                             </div>
                                             <Markdown className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert">
-                                                {work.metadata?.description}
+                                                {project.metadata?.description}
                                             </Markdown>
                                             {languages.length > 0 && (
                                                 <div className="mt-2">
@@ -188,18 +188,18 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                                         </div>
                                     </CardContent>
                                     <CardFooter>
-                                        {work.metadata?.links?.github && (
+                                        {project.metadata?.links?.github && (
                                             <div className="flex justify-center items-center text-center gap-1 w-full">
-                                                <Link href={work.metadata.links.github}>
+                                                <Link href={project.metadata.links.github}>
                                                     <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">
                                                         GitHub
                                                     </span>
                                                 </Link>
                                             </div>
                                         )}
-                                        {work.metadata?.links?.website && (
+                                        {project.metadata?.links?.website && (
                                             <div className="flex justify-center items-center text-center gap-1 w-full">
-                                                <LinkPreview url={work.metadata.links.website}>
+                                                <LinkPreview url={project.metadata.links.website}>
                                                     <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm">
                                                         Website
                                                     </span>
@@ -213,9 +213,9 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                 ) : null}
             </div>
 
-            {works.length !== 0 ? (
+            {projects.length !== 0 ? (
                 <div className="flex justify-between items-center text-center gap-1 w-full">
-                    <Link href="/work">
+                    <Link href="/project">
                         <span className="flex items-center px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">
                             <ArrowLeftIcon className="mr-1 size-3" />
                             Go Back
@@ -223,7 +223,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                     </Link>
                     <div className="flex gap-1">
                         {page > 1 && (
-                            <Link href={`/work/${categorySlug}?page=${page - 1}`}>
+                            <Link href={`/project/${categorySlug}?page=${page - 1}`}>
                                 <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">
                                     Previous
                                 </span>
@@ -233,7 +233,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                             const pageNumber = i + 1;
                             const isActive = pageNumber === page;
                             return (
-                                <Link key={pageNumber} href={`/work/${categorySlug}?page=${pageNumber}`}>
+                                <Link key={pageNumber} href={`/project/${categorySlug}?page=${pageNumber}`}>
                                     <span
                                         className={`px-2 py-1 ${isActive ? "bg-primary text-destructive" : "bg-reverse text-white dark:text-black"
                                             } border border-primary rounded-md text-sm w-28`}
@@ -244,7 +244,7 @@ export default async function WorkCategory({ params, searchParams }: WorkCategor
                             );
                         })}
                         {page < totalPages && (
-                            <Link href={`/work/${categorySlug}?page=${page + 1}`}>
+                            <Link href={`/project/${categorySlug}?page=${page + 1}`}>
                                 <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">
                                     Next
                                 </span>

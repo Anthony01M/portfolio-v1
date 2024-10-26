@@ -9,16 +9,16 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-import { getWorkCategories } from "@/data/data"
+import { getProjectCategories } from "@/data/data"
 
-export default async function WorkCategory() {
-    const categories = await getWorkCategories();
+export default async function ProjectCategory() {
+    const categories = await getProjectCategories();
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-15 gap-16 font-[family-name:var(--font-geist-sans)]">
             <div className="flex flex-col items-center justify-center mb-8">
-                <h1 className="text-4xl font-bold text-center mb-2">My Work</h1>
+                <h1 className="text-4xl font-bold text-center mb-2">My Projects</h1>
                 <p className="text-center text-muted-foreground dark:text-muted-invert">
-                    Please select a category to view my work in that category.
+                    Please select a category to view my projects in that category.
                 </p>
             </div>
             <div className="flex flex-wrap justify-center gap-8">
@@ -41,8 +41,8 @@ export default async function WorkCategory() {
                         </CardHeader>
                         <CardFooter>
                             <div className="flex justify-center items-center text-center gap-1 w-full">
-                                <Link href={`/work/${category.slug}`}>
-                                    <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">View Work</span>
+                                <Link href={`/project/${category.slug}`}>
+                                    <span className="px-2 py-1 bg-reverse text-white dark:text-black border border-primary rounded-md text-sm w-28">View Project</span>
                                 </Link>
                             </div>
                         </CardFooter>
