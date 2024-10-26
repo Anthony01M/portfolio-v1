@@ -52,6 +52,15 @@ export async function getProjectCategories(): Promise<Category[]> {
     return categories;
 }
 
+export async function getProjectCountByCategory(category: string): Promise<number> {
+    const dir = path.join(process.cwd(), "content/project", category);
+    if (!fs.existsSync(dir)) {
+        return 0;
+    }
+    const projects = await getAllProject(dir);
+    return projects.length;
+}
+
 function getMDXFiles(dir: string) {
     return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
