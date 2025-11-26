@@ -1,3 +1,7 @@
+# End of Life (EOL)
+This website has reached EOL; according to new policy, advertisement will be available on the website to support development of the new portfolio & provide (fully invested) to the community.
+
+# README
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
