@@ -71,6 +71,19 @@ export default function RootLayout({
         className={`${helvetica.variable} antialiased bg-background`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
+          <div className="w-full rounded-md p-4 text-center">
+            <p className="text-sm">
+              This portfolio has reached End of Life — a new portfolio is coming soon. Ads are displayed below (according to new policy).
+            </p>
+            <div id="frame" className="mt-2 w-full" style={{ position: 'relative', zIndex: 99998 }}>
+              <iframe
+                data-aa="2418663"
+                src="https://acceptable.a-ads.com/2418663/?size=Adaptive"
+                style={{ border: 0, padding: 0, width: '70%', height: 'auto', overflow: 'hidden', display: 'block', margin: 'auto' }}
+                title="advertisement"
+              />
+            </div>
+          </div>
           <TooltipProvider delayDuration={0}>
             {children}
             <Navbar />
